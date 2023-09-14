@@ -42,10 +42,36 @@ where $W(1) = 1$.
 
 **TODO: your answer goes here**
 
+Derived asymptotic behavior of $W(n)$:
+  $f(n) = 1$ -> $O(n)$,
+  $f(n) = log(n)$ -> $O(nlog(n))$,
+  $f(n) = n$ -> $O(n^2)$
+
+Generated values (n = 1, 10, 100):
+  $f(n) = 1$ -> 1, 15, 127;
+  $f(n) = log(n)$ -> 1, 36, 625;
+  $f(n) = n$ -> 1, 174, 19580;
+
+It appears that the derived asymptotic behavior matches the actual outcomes.
+
 - [ ] 5. (4 points) Now that you have a nice way to empirically generate valuess of $W(n)$, we can look at the relationship between $a$, $b$, and $f(n)$. Suppose that $f(n) = n^c$. What is the asypmptotic behavior of $W(n)$ if $c < \log_b a$? What about $c > \log_b a$? And if they are equal? Modify `compare_work` to compare empirical values for different work functions (at several different values of $n$) to justify your answer. 
 
 **TODO: your answer goes here**
+After testing, we can see that when $c < \log_b a$, $\log_b a$ has a longer runtime and asymptotically dominates, aligning with $O(n^log_b a)$. 
+When $c > \log_b a$, then $n^c$ outpaces $\log_b a$ with runtime $O(n^c)$.
+If they are balanced, runtime would be roughly $O(n^c + n^(\log_b a))$
+
+|     n |               W_1 |                                   W_2 |
+|-------|-------------------|---------------------------------------|
+|    10 |          1068.000 |                         103141896.000 |
+|    20 |          8944.000 |                       26425135168.000 |
+|    50 |        104780.000 |                    40311608823560.000 |
+|   100 |        848240.000 |                 10322492870588480.000 |
+|  1000 |     509190592.000 |         1032258003030777230524416.000 |
+|  5000 |  143543110592.000 |    403225801556827884938718085120.000 |
+| 10000 | 1148444884736.000 | 103225806412454631260421716180992.000 |
 
 - [ ] 6. (3 points) $W(n)$ is meant to represent the running time of some recursive algorithm. Suppose we always had $a$ processors available to us and we wanted to compute the span of the same algorithm. Implement the function `span_calc` to compute the empirical span, where the work of the algorithm is given by $W(n)$. Implement `test_compare_span` to create a new comparison function for comparing span functions. Derive the asymptotic expressions for the span of the recurrences you used in problem 4 above. Confirm that everything matches up as it should. 
 
 **TODO: your answer goes here**
+In a recurrence, the tree splits according to the b value, leading the span for the recurrences to be $O(n^(\log_b a))$. This is supported by span_calc, as they remain proportional as n increases.
